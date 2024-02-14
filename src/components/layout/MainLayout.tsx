@@ -19,10 +19,14 @@ const MainLayout = () => {
         <Layout>
           <Header
             style={{
-              padding: 0,
+              padding: 3,
               display: "flex",
               justifyContent: "end",
               alignItems: "center",
+              position: "sticky",
+              top: 0,
+              right: 0,
+              zIndex: 9,
             }}
           >
             <Button onClick={handleLogout}>Logout</Button>

@@ -6,7 +6,7 @@ export interface IBike {
   name: string;
   price: number;
   quantity: number;
-  userEmail: string;
+  sellerEmail: string;
   brand: string;
   color: string;
   mileage: number;
@@ -32,7 +32,7 @@ const BikeDetails = () => {
         <h3 style={{ margin: "20px 0" }}>Bike Name: {bike!.name}</h3>
         <p style={{ margin: "20px 0" }}>Bike Price: {bike!.price}</p>
         <p style={{ margin: "20px 0" }}>Available Quantity: {bike!.quantity}</p>
-        <p style={{ margin: "20px 0" }}>Owner Email: {bike!.userEmail}</p>
+        <p style={{ margin: "20px 0" }}>Seller Email: {bike!.sellerEmail}</p>
         <p style={{ margin: "20px 0" }}>Brand: {bike!.brand}</p>
         <p style={{ margin: "20px 0" }}>Color: {bike!.color}</p>
         <p style={{ margin: "20px 0" }}>Mileage: {bike!.mileage}</p>

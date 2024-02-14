@@ -1,4 +1,4 @@
-import { Button } from "antd";
+import { Button, Modal } from "antd";
 import {
   useDeleteBulkBikeMutation,
   useDeleteOneBikeMutation,
@@ -11,10 +11,12 @@ import { addBike } from "../../redux/features/bike/bikeSlice";
 import FormContainer from "../../components/form/FormContainer";
 import { FieldValues } from "react-hook-form";
 import CustomizeInput from "../../components/form/CustomizeInput";
-import { CSSProperties, ChangeEvent, useState } from "react";
-import BikeModel from "./BikeModel";
+import React, { CSSProperties, ChangeEvent, useState } from "react";
+
 import { IBike } from "./BikeDetails";
 import { toast } from "sonner";
+import { useCreateSellMutation } from "../../redux/features/sell/sellApi";
+import CustomizeDatePicker from "../../components/form/CustomizeDatePicker";
 
 const Bikes = () => {
   const [search, setSearch] = useState(null);
@@ -118,7 +120,6 @@ const Bikes = () => {
             <th style={thStyle}> Color </th>
             <th style={thStyle}> Release Date </th>
             <th style={thStyle}> Brand </th>
-            <th style={thStyle}> Owner Email </th>
             <th style={thStyle}> Actions </th>
           </tr>
         </thead>
@@ -143,7 +144,6 @@ const Bikes = () => {
                   <td style={tdStyle}>{bike.color}</td>
                   <td style={tdStyle}>{bike.releaseDate}</td>
                   <td style={tdStyle}>{bike.brand}</td>
-                  <td style={tdStyle}>{bike.userEmail}</td>
                   <td style={tdStyle}>
                     <Button type="primary" onClick={() => editBike(bike)}>
                       Edit
@@ -161,7 +161,7 @@ const Bikes = () => {
                       Create Variant
                     </Button>
                     <Button
-                      type="default"
+                      type="primary"
                       onClick={() => {
                         setIsOpen(true);
                         setBikeId(bike._id);
@@ -169,6 +169,8 @@ const Bikes = () => {
                     >
                       Sell
                     </Button>
+
+                    <Button type="default">Request Maintenance</Button>
                   </td>
                 </tr>
               )
@@ -182,11 +184,65 @@ const Bikes = () => {
         </Button>
       </div>
 
-      <BikeModel
+      <SellBikeModal
         modalIsOpen={modalIsOpen}
         setIsOpen={setIsOpen}
         bikeId={bikeId}
       />
+    </>
+  );
+};
+
+type TSellBikeProps = {
+  modalIsOpen: boolean;
+  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  bikeId: string;
+};
+
+const SellBikeModal = ({ modalIsOpen, setIsOpen, bikeId }: TSellBikeProps) => {
+  const [createSell] = useCreateSellMutation();
+
+  const showModal = () => {
+    setIsOpen(true);
+  };
+
+  const handleCancel = () => {
+    setIsOpen(false);
+  };
+
+  const onSubmit = async (data: FieldValues) => {
+    try {
+      const quantity = Number(data.quantity);
+      createSell({ ...data, bikeId, quantity });
+      toast.success("Sell recored");
+      setIsOpen(false);
+    } catch (error) {
+      toast.error("Something went wrong");
+    }
+  };
+
+  return (
+    <>
+      <Modal
+        title="Sell Bike"
+        open={modalIsOpen}
+        onCancel={handleCancel}
+        footer={null}
+      >
+        <FormContainer onSubmit={onSubmit}>
+          <CustomizeInput
+            type="number"
+            name="quantity"
+            label="Order Quantity:"
+          />
+          <CustomizeInput type="text" name="buyerName" label="Buyer Name:" />
+          <CustomizeDatePicker name="date" label="Date of the sale:" />
+
+          <Button htmlType="submit" type="primary">
+            Sell
+          </Button>
+        </FormContainer>
+      </Modal>
     </>
   );
 };

@@ -1,21 +1,30 @@
-import { Input } from "antd";
+import { Form, Input } from "antd";
 import { Controller } from "react-hook-form";
 
-interface IInputProps {
+type TInputProps = {
   type: string;
   name: string;
   label?: string;
-}
+  disabled?: boolean;
+};
 
-const CustomizeInput = ({ type, name, label }: IInputProps) => {
+const CustomizeInput = ({ type, name, label, disabled }: TInputProps) => {
   return (
     <>
       <div style={{ marginBottom: "20px" }}>
-        {label ? label : null}
         <Controller
           name={name}
           render={({ field }) => (
-            <Input {...field} type={type} id={name} placeholder={name} />
+            <Form.Item label={label}>
+              <Input
+                {...field}
+                type={type}
+                id={name}
+                size="large"
+                placeholder={name}
+                disabled={disabled}
+              />
+            </Form.Item>
           )}
         />
       </div>

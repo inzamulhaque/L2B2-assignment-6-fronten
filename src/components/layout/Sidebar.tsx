@@ -14,7 +14,11 @@ const Sidebar = () => {
 
   return (
     <>
-      <Sider breakpoint="lg" collapsedWidth="0">
+      <Sider
+        breakpoint="lg"
+        collapsedWidth="0"
+        style={{ height: "100vh", position: "sticky", top: "0", left: "0" }}
+      >
         <div
           style={{
             color: "white",
@@ -24,7 +28,7 @@ const Sidebar = () => {
             alignItems: "center",
           }}
         >
-          <h1>PH Uni</h1>
+          <h1>IH Bikes</h1>
         </div>
         <Menu
           theme="dark"

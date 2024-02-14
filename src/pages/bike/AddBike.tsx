@@ -1,14 +1,44 @@
-import { Button, Row } from "antd";
+import { Button, Col, Row } from "antd";
 import FormContainer from "../../components/form/FormContainer";
 import CustomizeInput from "../../components/form/CustomizeInput";
 import { FieldValues } from "react-hook-form";
 import { useAddBikeMutation } from "../../redux/features/bike/bikeApi";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
+import CustomizeDatePicker from "../../components/form/CustomizeDatePicker";
+import CustomizeSelect, {
+  TSelect,
+} from "../../components/form/CustomizeSelect";
 
 const AddBike = () => {
   const [addBike] = useAddBikeMutation();
   const navigate = useNavigate();
+
+  const bikeSizeOption: TSelect[] = [
+    {
+      value: "1 Sit",
+      label: "1 Sit",
+    },
+    {
+      value: "2 Sit",
+      label: "2 Sit",
+    },
+  ];
+
+  const bikeTypeOption: TSelect[] = [
+    {
+      value: "Normal",
+      label: "Normal",
+    },
+    {
+      value: "Racing",
+      label: "Racing",
+    },
+    {
+      value: "Mountain",
+      label: "Mountain",
+    },
+  ];
 
   const onSubmit = async (bikeData: FieldValues) => {
     try {
@@ -37,41 +67,70 @@ const AddBike = () => {
     <>
       <h1>Add New Bike</h1>
       <Row justify="center" align="middle" style={{ height: "100%" }}>
-        <FormContainer onSubmit={onSubmit}>
-          <CustomizeInput type="text" name="name" label="Bike Name:" />
-          <CustomizeInput type="number" name="price" label="Bike Price:" />
-          <CustomizeInput
-            type="number"
-            name="quantity"
-            label="Bike Quantity:"
-          />
-          <CustomizeInput
-            type="date"
-            name="releaseDate"
-            label="Release Date:"
-          />
+        <Col span={24}>
+          <FormContainer onSubmit={onSubmit}>
+            <h1 style={{ textAlign: "center", margin: "10px" }}>
+              Bike Details
+            </h1>
+            <Row gutter={8}>
+              <Col span={24} md={{ span: 12 }} lg={{ span: 6 }}>
+                <CustomizeInput type="text" name="name" />
+              </Col>
 
-          <CustomizeInput type="text" name="brand" label="Brand:" />
-          <CustomizeInput type="text" name="model" label="Model:" />
-          <CustomizeInput type="text" name="size" label="Size:" />
-          <CustomizeInput type="text" name="type" label="Bike Type:" />
-          <CustomizeInput type="text" name="color" label="Bike Color:" />
-          <CustomizeInput type="number" name="mileage" label="Mileage:" />
-          <CustomizeInput
-            type="number"
-            name="policyNumber"
-            label="Policy Number:"
-          />
-          <CustomizeInput
-            type="text"
-            name="expirationDate"
-            label="Expiration Date:"
-          />
+              <Col span={24} md={{ span: 12 }} lg={{ span: 6 }}>
+                <CustomizeInput type="number" name="price" />
+              </Col>
 
-          <Button htmlType="submit" type="primary">
-            Add Bike
-          </Button>
-        </FormContainer>
+              <Col span={24} md={{ span: 12 }} lg={{ span: 6 }}>
+                <CustomizeInput type="number" name="quantity" />
+              </Col>
+
+              <Col span={24} md={{ span: 12 }} lg={{ span: 6 }}>
+                <CustomizeDatePicker name="releaseDate" />
+              </Col>
+
+              <Col span={24} md={{ span: 12 }} lg={{ span: 6 }}>
+                <CustomizeInput type="text" name="brand" />
+              </Col>
+
+              <Col span={24} md={{ span: 12 }} lg={{ span: 6 }}>
+                <CustomizeInput type="text" name="model" />
+              </Col>
+
+              <Col span={24} md={{ span: 12 }} lg={{ span: 6 }}>
+                <CustomizeSelect
+                  options={bikeSizeOption}
+                  placeholder="Select Bike Size"
+                  name="size"
+                />
+              </Col>
+
+              <Col span={24} md={{ span: 12 }} lg={{ span: 6 }}>
+                <CustomizeSelect
+                  options={bikeTypeOption}
+                  placeholder="Select Bike Type"
+                  name="type"
+                />
+              </Col>
+
+              <Col span={24} md={{ span: 12 }} lg={{ span: 6 }}>
+                <CustomizeInput type="text" name="color" />
+              </Col>
+
+              <Col span={24} md={{ span: 12 }} lg={{ span: 6 }}>
+                <CustomizeInput type="number" name="mileage" />
+              </Col>
+
+              <Col span={24} md={{ span: 12 }} lg={{ span: 6 }}>
+                <CustomizeInput type="number" name="policyNumber" />
+              </Col>
+            </Row>
+
+            <Button htmlType="submit" type="primary">
+              Add Bike
+            </Button>
+          </FormContainer>
+        </Col>
       </Row>
     </>
   );

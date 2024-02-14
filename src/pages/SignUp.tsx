@@ -5,10 +5,22 @@ import { useNavigate } from "react-router-dom";
 import { FieldValues } from "react-hook-form";
 import { toast } from "sonner";
 import { useSignupMutation } from "../redux/features/auth/authApi";
+import CustomizeSelect, { TSelect } from "../components/form/CustomizeSelect";
 
 const SignUp = () => {
   const navigate = useNavigate();
   const [signup] = useSignupMutation();
+
+  const roleOptions: TSelect[] = [
+    {
+      value: "buyer",
+      label: "Buyer",
+    },
+    {
+      value: "seller",
+      label: "Seller",
+    },
+  ];
 
   const onSubmit = (info: FieldValues) => {
     const loadingToastId = toast.loading("Signup in proccess! Please wait");
@@ -53,6 +65,13 @@ const SignUp = () => {
           <CustomizeInput type="text" name="address" label="Address:" />
 
           <CustomizeInput type="text" name="contact" label="Contact:" />
+
+          <CustomizeSelect
+            options={roleOptions}
+            placeholder="Select Your Role"
+            name="role"
+            label="Role:"
+          />
 
           <div style={{ margin: "15px 0" }}>
             <p
