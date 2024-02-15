@@ -118,18 +118,18 @@ const Bikes = () => {
     }
   };
 
-  const thStyle: CSSProperties = {
-    padding: "10px",
-    textAlign: "center",
-    fontWeight: "bold",
-    border: "1px solid black",
-  };
+  // const thStyle: CSSProperties = {
+  //   padding: "10px",
+  //   textAlign: "center",
+  //   fontWeight: "bold",
+  //   border: "1px solid black",
+  // };
 
-  const tdStyle: CSSProperties = {
-    padding: "10px",
-    textAlign: "center",
-    border: "1px solid black",
-  };
+  // const tdStyle: CSSProperties = {
+  //   padding: "10px",
+  //   textAlign: "center",
+  //   border: "1px solid black",
+  // };
 
   const columns: TableColumnsType<TTableType> = [
     {
@@ -181,27 +181,27 @@ const Bikes = () => {
       render: (item) => {
         return (
           <Row gutter={1}>
-            <Col span={3}>
+            <Col span={4}>
               <Button type="primary" onClick={() => editBike(item)}>
                 Edit
               </Button>
             </Col>
-            <Col span={3}>
+            <Col span={4}>
               <Button type="default" onClick={() => deleteOneBike(item._id)}>
                 Delete
               </Button>
             </Col>
-            <Col span={3}>
+            <Col span={4}>
               <Button type="primary" onClick={() => bikeDetails(item)}>
                 Details
               </Button>
             </Col>
-            <Col span={5}>
+            <Col span={6}>
               <Button type="default" onClick={() => CreateVariant(item)}>
                 Create Variant
               </Button>
             </Col>
-            <Col span={3}>
+            <Col span={4}>
               <Button
                 type="primary"
                 onClick={() => {
@@ -211,9 +211,6 @@ const Bikes = () => {
               >
                 Sell
               </Button>
-            </Col>
-            <Col span={6}>
-              <Button type="default">Request Maintenance</Button>
             </Col>
           </Row>
         );

@@ -9,6 +9,7 @@ import Sales from "../pages/sale/Sales";
 import BikeDetails from "../pages/bike/BikeDetails";
 import EditBike from "../pages/bike/EditBike";
 import CreateVariant from "../pages/bike/CreateVariant";
+import ProtectedRoute from "../components/layout/ProtectedRoute";
 
 const router = createBrowserRouter([
   {
@@ -32,11 +33,19 @@ const router = createBrowserRouter([
       },
       {
         path: "edit/:id",
-        element: <EditBike />,
+        element: (
+          <ProtectedRoute role="seller">
+            <EditBike />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "create-variant",
-        element: <CreateVariant />,
+        element: (
+          <ProtectedRoute role="seller">
+            <CreateVariant />
+          </ProtectedRoute>
+        ),
       },
     ],
   },
@@ -46,7 +55,11 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <Sales />,
+        element: (
+          <ProtectedRoute role="seller">
+            <Sales />
+          </ProtectedRoute>
+        ),
       },
     ],
   },
