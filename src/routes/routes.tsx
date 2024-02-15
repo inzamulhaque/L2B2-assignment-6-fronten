@@ -31,7 +31,7 @@ const router = createBrowserRouter([
         element: <BikeDetails />,
       },
       {
-        path: "edit",
+        path: "edit/:id",
         element: <EditBike />,
       },
       {

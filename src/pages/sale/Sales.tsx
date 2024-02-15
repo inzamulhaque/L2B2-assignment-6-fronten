@@ -13,7 +13,7 @@ export interface ISale {
   };
   quantity: number;
   totalAmount: number;
-  userEmail: string;
+  sellerEmail: string;
 }
 
 const Sales = () => {
@@ -87,7 +87,7 @@ const Sales = () => {
               <td style={tdStyle}>{sale?.quantity}</td>
               <td style={tdStyle}>{sale?.bikeId?.price}</td>
               <td style={tdStyle}>{sale?.totalAmount}</td>
-              <td style={tdStyle}>{sale?.userEmail}</td>
+              <td style={tdStyle}>{sale?.sellerEmail}</td>
             </tr>
           ))}
         </tbody>

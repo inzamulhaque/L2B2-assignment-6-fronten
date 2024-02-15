@@ -22,6 +22,8 @@ const FormContainer = ({ onSubmit, children, defaultValues }: IFormProps) => {
     formConfig["defaultValues"] = defaultValues;
   }
 
+  console.log(defaultValues);
+
   const methods = useForm(formConfig);
 
   return (
