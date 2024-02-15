@@ -133,6 +133,23 @@ const Bikes = () => {
 
   const columns: TableColumnsType<TTableType> = [
     {
+      title: " ",
+      key: "Y",
+      render: (item) => {
+        return (
+          <>
+            <input
+              type="checkbox"
+              name="id"
+              value={item._id}
+              checked={selectedIds.includes(item._id)}
+              onChange={bulkDelete}
+            />
+          </>
+        );
+      },
+    },
+    {
       title: "Name",
       key: "name",
       dataIndex: "name",
