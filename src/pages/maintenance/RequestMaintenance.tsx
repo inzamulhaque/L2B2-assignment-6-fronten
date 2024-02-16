@@ -3,9 +3,12 @@ import { useGetAllBikesQuery } from "../../redux/features/bike/bikeApi";
 import { FieldValues } from "react-hook-form";
 import FormContainer from "../../components/form/FormContainer";
 import CustomizeInput from "../../components/form/CustomizeInput";
-import { Button, Col, Row, Table, TableColumnsType } from "antd";
+import { Button, Col, Modal, Row, Table, TableColumnsType } from "antd";
 import { TBike, TTableType } from "../bike/Bikes";
 import moment from "moment";
+import CustomizeDatePicker from "../../components/form/CustomizeDatePicker";
+import { toast } from "sonner";
+import { useRequestMaintenanceMutation } from "../../redux/features/maintenance/maintenanceApi";
 
 const RequestMaintenance = () => {
   const [search, setSearch] = useState(null);
@@ -52,7 +55,7 @@ const RequestMaintenance = () => {
         return (
           <Row gutter={1}>
             <Col span={24} md={{ span: 4 }}>
-              <Button type="primary">Request Maintenance</Button>
+              <AddMarksModal bikeKey={item.key} />
             </Col>
           </Row>
         );
@@ -78,6 +81,83 @@ const RequestMaintenance = () => {
       </div>
 
       <Table loading={isFetching} columns={columns} dataSource={tableData} />
+    </>
+  );
+};
+
+const AddMarksModal = ({ bikeKey }: { bikeKey: string }) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [addReqMainenance] = useRequestMaintenanceMutation();
+
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
+
+  const onSubmit = async (data: FieldValues) => {
+    const toastId = toast.success("Creating...");
+
+    try {
+      const reqMaintenanceData = {
+        bikeId: bikeKey,
+        date: moment(new Date(data.date as string)).format("ll"),
+        nextScheduled: moment(new Date(data.nextScheduled as string)).format(
+          "ll"
+        ),
+        serviceDetails: data.serviceDetails,
+        notes: data.notes,
+      };
+
+      console.log(reqMaintenanceData);
+
+      const res = await addReqMainenance(reqMaintenanceData);
+
+      if (res?.data?.success === true) {
+        toast.success(res?.data?.message, { id: toastId });
+        setIsModalOpen(false);
+      } else {
+        toast.error(res?.error?.data?.message, { id: toastId });
+      }
+    } catch (error) {
+      toast.error("something went wrong", { id: toastId });
+    }
+  };
+
+  return (
+    <>
+      <Button onClick={showModal} type="primary">
+        Request Maintenance
+      </Button>
+      <Modal
+        title="Request Maintenance"
+        open={isModalOpen}
+        onCancel={handleCancel}
+        footer={null}
+      >
+        <FormContainer onSubmit={onSubmit}>
+          <CustomizeDatePicker name="date" label="Date of the Last Servicing" />
+
+          <CustomizeDatePicker
+            name="nextScheduled"
+            label="Next Scheduled Servicing Date"
+          />
+
+          <CustomizeInput
+            type="text"
+            name="serviceDetails"
+            label="Service Details"
+          />
+
+          <CustomizeInput type="text" name="notes" label="Notes" />
+
+          <Button htmlType="submit" type="primary">
+            Request Maintenance
+          </Button>
+        </FormContainer>
+      </Modal>
     </>
   );
 };

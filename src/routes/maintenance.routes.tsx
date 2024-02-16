@@ -1,4 +1,5 @@
 import ProtectedRoute from "../components/layout/ProtectedRoute";
+import BuyerMaintenanceData from "../pages/maintenance/BuyerMaintenanceData";
 import RequestMaintenance from "../pages/maintenance/RequestMaintenance";
 
 const buyerPath = [
@@ -11,6 +12,15 @@ const buyerPath = [
         element: (
           <ProtectedRoute role="buyer">
             <RequestMaintenance />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        name: "My Maintenance Data",
+        path: "my-maintenance-data",
+        element: (
+          <ProtectedRoute role="buyer">
+            <BuyerMaintenanceData />
           </ProtectedRoute>
         ),
       },
