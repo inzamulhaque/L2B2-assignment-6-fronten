@@ -18,7 +18,18 @@ const sellApi = baseApi.injectEndpoints({
       }),
       providesTags: ["sell"],
     }),
+
+    getOrderById: builder.query({
+      query: (id) => ({
+        url: `/sales/${id}`,
+        method: "GET",
+      }),
+    }),
   }),
 });
 
-export const { useCreateSellMutation, useSalesHistoryQuery } = sellApi;
+export const {
+  useCreateSellMutation,
+  useSalesHistoryQuery,
+  useGetOrderByIdQuery,
+} = sellApi;

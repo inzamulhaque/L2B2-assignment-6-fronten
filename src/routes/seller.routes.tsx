@@ -2,6 +2,7 @@ import ProtectedRoute from "../components/layout/ProtectedRoute";
 import AddBike from "../pages/bike/AddBike";
 import Bikes from "../pages/bike/Bikes";
 import SellerMaintenanceData from "../pages/maintenance/SellerMaintenanceData";
+import PrintBill from "../pages/sale/PrintBill";
 import Sales from "../pages/sale/Sales";
 
 const sellerPath = [
@@ -44,6 +45,15 @@ const sellerPath = [
     element: (
       <ProtectedRoute role="seller">
         <SellerMaintenanceData />
+      </ProtectedRoute>
+    ),
+  },
+
+  {
+    path: "bill/:id",
+    element: (
+      <ProtectedRoute role="seller">
+        <PrintBill />
       </ProtectedRoute>
     ),
   },

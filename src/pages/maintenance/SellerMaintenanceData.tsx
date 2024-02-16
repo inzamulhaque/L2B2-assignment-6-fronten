@@ -9,12 +9,18 @@ import { toast } from "sonner";
 type TMaintenanceTable = {
   key: string;
   bikeName: string;
+  buyerEmail: string;
+  date: string;
+  nextScheduled: string;
   reqDate: string;
   status: string;
 };
 
 type TMaintenanceData = {
   _id: string;
+  buyerEmail: string;
+  date: string;
+  nextScheduled: string;
   reqDate: string;
   status: string;
   createdAt: string;
@@ -31,6 +37,9 @@ const SellerMaintenanceData = () => {
 
   const tableData = maintenanceData?.data?.map((data: TMaintenanceData) => ({
     key: data._id,
+    buyerEmail: data.buyerEmail,
+    date: data.date,
+    nextScheduled: data.nextScheduled,
     bikeName: data?.bikeId?.name,
     reqDate: moment(new Date(data.createdAt as string)).format("ll"),
     status: data.status,
@@ -48,12 +57,31 @@ const SellerMaintenanceData = () => {
     },
 
     {
+      title: "Buyer Email",
+      key: "buyerEmail",
+      dataIndex: "buyerEmail",
+    },
+
+    {
+      title: "Last Date of Servicing",
+      key: "date",
+      dataIndex: "date",
+    },
+
+    {
+      title: "Next Scheduled",
+      key: "nextScheduled",
+      dataIndex: "nextScheduled",
+    },
+
+    {
       title: "Request Date",
       key: "reqDate",
       dataIndex: "reqDate",
     },
+
     {
-      title: "Action",
+      title: "Status",
       key: "X",
       render: (item) => {
         if (item.status === "pending") {

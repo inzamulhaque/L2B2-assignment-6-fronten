@@ -1,6 +1,7 @@
 import { Button, Table, TableColumnsType } from "antd";
 import { useSalesHistoryQuery } from "../../redux/features/sell/sellApi";
-import { CSSProperties, useState } from "react";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export interface ISale {
   _id: string;
@@ -20,21 +21,11 @@ const Sales = () => {
   const [time, seTime] = useState("Monthly");
   const { data: sales, isFetching } = useSalesHistoryQuery(time);
 
-  const thStyle: CSSProperties = {
-    padding: "10px",
-    textAlign: "center",
-    fontWeight: "bold",
-    border: "1px solid black",
-  };
-
-  const tdStyle: CSSProperties = {
-    padding: "10px",
-    textAlign: "center",
-    border: "1px solid black",
-  };
+  const navigate = useNavigate();
 
   const tableData = sales?.data?.map((sale: ISale, index: number) => ({
     sl: index + 1,
+    key: sale._id,
     buyerName: sale?.buyerName,
     bikeName: sale?.bikeId?.name,
     bikeColor: sale?.bikeId?.color,
@@ -43,6 +34,10 @@ const Sales = () => {
     total: sale?.totalAmount,
     sellerEmail: sale?.sellerEmail,
   }));
+
+  const handlePrintBill = (id: string) => {
+    navigate(`/seller/bill/${id}`);
+  };
 
   const columns: TableColumnsType<ISale> = [
     {
@@ -85,6 +80,18 @@ const Sales = () => {
       key: "sellerEmail",
       dataIndex: "sellerEmail",
     },
+
+    {
+      title: "Action",
+      key: "X",
+      render: (item) => {
+        return (
+          <Button onClick={() => handlePrintBill(item.key)} type="primary">
+            Print Bill
+          </Button>
+        );
+      },
+    },
   ];
 
   return (
@@ -111,41 +118,6 @@ const Sales = () => {
           Yearly
         </Button>
       </div>
-
-      {/* <table
-        style={{
-          borderCollapse: "collapse",
-          width: "100%",
-        }}
-      >
-        <thead>
-          <tr>
-            <th style={thStyle}> SL NO. </th>
-            <th style={thStyle}> Buyer Name </th>
-            <th style={thStyle}> Bike Name </th>
-            <th style={thStyle}> Bike Color </th>
-            <th style={thStyle}> Bike Quantity </th>
-            <th style={thStyle}> Bike Price </th>
-            <th style={thStyle}> Total </th>
-            <th style={thStyle}> Seller Email </th>
-          </tr>
-        </thead>
-
-        <tbody>
-          {sales?.data?.map((sale: ISale, index: number) => (
-            <tr key={index}>
-              <td style={tdStyle}>{index + 1}</td>
-              <td style={tdStyle}>{sale?.buyerName}</td>
-              <td style={tdStyle}>{sale?.bikeId?.name}</td>
-              <td style={tdStyle}>{sale?.bikeId?.color}</td>
-              <td style={tdStyle}>{sale?.quantity}</td>
-              <td style={tdStyle}>{sale?.bikeId?.price}</td>
-              <td style={tdStyle}>{sale?.totalAmount}</td>
-              <td style={tdStyle}>{sale?.sellerEmail}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table> */}
 
       <Table loading={isFetching} columns={columns} dataSource={tableData} />
     </>
