@@ -1,16 +1,17 @@
 import { Layout, Menu } from "antd";
 import sidebarItemsGenerator from "../../utils/sidebarItemsGenerator";
-import bikePath from "../../routes/bike.routes";
-import { NavLink } from "react-router-dom";
+
+import sellerPath from "../../routes/seller.routes";
 
 const { Sider } = Layout;
 
 const Sidebar = () => {
-  const bikeSideBarItem = sidebarItemsGenerator(bikePath, "bikes");
-  const sidebarItems = [
-    ...bikeSideBarItem,
-    { key: "Sales", label: <NavLink to="/sales">Sales</NavLink> },
-  ];
+  // const bikeSideBarItem = sidebarItemsGenerator(bikePath, "bikes");
+  const sidebarItems = sidebarItemsGenerator(sellerPath, "seller");
+  // const sidebarItems = [
+  //   ...bikeSideBarItem,
+  //   { key: "Sales", label: <NavLink to="/sales">Sales</NavLink> },
+  // ];
 
   return (
     <>

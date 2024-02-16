@@ -3,13 +3,14 @@ import Login from "../pages/Login";
 import SignUp from "../pages/SignUp";
 import App from "../App";
 import routeGenerator from "../utils/routesGenerator";
-import bikePath from "./bike.routes";
+
 import Bikes from "../pages/bike/Bikes";
-import Sales from "../pages/sale/Sales";
 import BikeDetails from "../pages/bike/BikeDetails";
 import EditBike from "../pages/bike/EditBike";
 import CreateVariant from "../pages/bike/CreateVariant";
 import ProtectedRoute from "../components/layout/ProtectedRoute";
+import sellerPath from "./seller.routes";
+import Landing from "../components/layout/Landing";
 
 const router = createBrowserRouter([
   {
@@ -18,15 +19,15 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <Bikes />,
+        element: <Landing />,
       },
     ],
   },
   {
-    path: "/bikes",
+    path: "/seller",
     element: <App />,
     children: [
-      ...routeGenerator(bikePath),
+      ...routeGenerator(sellerPath),
       {
         path: "details",
         element: <BikeDetails />,
@@ -49,20 +50,7 @@ const router = createBrowserRouter([
       },
     ],
   },
-  {
-    path: "/sales",
-    element: <App />,
-    children: [
-      {
-        index: true,
-        element: (
-          <ProtectedRoute role="seller">
-            <Sales />
-          </ProtectedRoute>
-        ),
-      },
-    ],
-  },
+
   {
     path: "/user/signin",
     element: <Login />,

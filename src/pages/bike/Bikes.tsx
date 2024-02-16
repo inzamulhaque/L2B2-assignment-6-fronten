@@ -1,12 +1,4 @@
-import {
-  Button,
-  Col,
-  Dropdown,
-  Modal,
-  Row,
-  Table,
-  TableColumnsType,
-} from "antd";
+import { Button, Col, Modal, Row, Table, TableColumnsType } from "antd";
 import {
   useDeleteBulkBikeMutation,
   useDeleteOneBikeMutation,
@@ -19,7 +11,7 @@ import { addBike } from "../../redux/features/bike/bikeSlice";
 import FormContainer from "../../components/form/FormContainer";
 import { FieldValues } from "react-hook-form";
 import CustomizeInput from "../../components/form/CustomizeInput";
-import React, { CSSProperties, ChangeEvent, useState } from "react";
+import React, { ChangeEvent, useState } from "react";
 
 import { IBike } from "./BikeDetails";
 import { toast } from "sonner";
@@ -80,17 +72,17 @@ const Bikes = () => {
 
   const editBike = (bike: IBike) => {
     dispatch(addBike(bike));
-    navigate(`/bikes/edit/${bike._id}`);
+    navigate(`/seller/edit/${bike._id}`);
   };
 
   const CreateVariant = (bike: IBike) => {
     dispatch(addBike(bike));
-    navigate("/bikes/create-variant");
+    navigate("/seller/create-variant");
   };
 
   const bikeDetails = (bike: IBike) => {
     dispatch(addBike(bike));
-    navigate("/bikes/details");
+    navigate("/seller/details");
   };
 
   const onSubmit = (condition: FieldValues) => {
