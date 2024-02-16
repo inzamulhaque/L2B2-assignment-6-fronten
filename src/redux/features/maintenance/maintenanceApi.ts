@@ -18,8 +18,28 @@ const maintenanceApi = baseApi.injectEndpoints({
       }),
       providesTags: ["maintenance"],
     }),
+
+    getAllMaintenanceData: builder.query({
+      query: () => ({
+        url: "/maintenance",
+        method: "GET",
+      }),
+      providesTags: ["maintenance"],
+    }),
+
+    acceptMaintenanceRequest: builder.mutation({
+      query: (id: string) => ({
+        url: `/maintenance/accept-request/${id}`,
+        method: "PATCH",
+      }),
+      invalidatesTags: ["maintenance"],
+    }),
   }),
 });
 
-export const { useRequestMaintenanceMutation, useGetMyMaintenanceDataQuery } =
-  maintenanceApi;
+export const {
+  useRequestMaintenanceMutation,
+  useGetMyMaintenanceDataQuery,
+  useGetAllMaintenanceDataQuery,
+  useAcceptMaintenanceRequestMutation,
+} = maintenanceApi;

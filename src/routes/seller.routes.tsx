@@ -1,6 +1,7 @@
 import ProtectedRoute from "../components/layout/ProtectedRoute";
 import AddBike from "../pages/bike/AddBike";
 import Bikes from "../pages/bike/Bikes";
+import SellerMaintenanceData from "../pages/maintenance/SellerMaintenanceData";
 import Sales from "../pages/sale/Sales";
 
 const sellerPath = [
@@ -33,6 +34,16 @@ const sellerPath = [
     element: (
       <ProtectedRoute role="seller">
         <Sales />
+      </ProtectedRoute>
+    ),
+  },
+
+  {
+    name: "Maintenance",
+    path: "maintenance-request",
+    element: (
+      <ProtectedRoute role="seller">
+        <SellerMaintenanceData />
       </ProtectedRoute>
     ),
   },

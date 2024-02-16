@@ -3,7 +3,7 @@ import sidebarItemsGenerator from "../../utils/sidebarItemsGenerator";
 
 import sellerPath from "../../routes/seller.routes";
 import { IUser, useCurrentToken } from "../../redux/features/auth/authSlice";
-import buyerPath from "../../routes/maintenance.routes";
+import buyerPath from "../../routes/buyer.routes";
 import { useAppSelector } from "../../redux/hooks";
 import verifyToken from "../../utils/verifyToken";
 

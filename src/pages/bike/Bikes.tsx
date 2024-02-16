@@ -238,10 +238,6 @@ type TSellBikeProps = {
 const SellBikeModal = ({ modalIsOpen, setIsOpen, bikeId }: TSellBikeProps) => {
   const [createSell] = useCreateSellMutation();
 
-  const showModal = () => {
-    setIsOpen(true);
-  };
-
   const handleCancel = () => {
     setIsOpen(false);
   };
@@ -250,7 +246,7 @@ const SellBikeModal = ({ modalIsOpen, setIsOpen, bikeId }: TSellBikeProps) => {
     try {
       const quantity = Number(data.quantity);
       createSell({ ...data, bikeId, quantity });
-      toast.success("Sell recored");
+      toast.success("Sell recoded");
       setIsOpen(false);
     } catch (error) {
       toast.error("Something went wrong");
