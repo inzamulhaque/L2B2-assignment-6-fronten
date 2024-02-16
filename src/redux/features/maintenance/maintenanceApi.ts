@@ -8,6 +8,7 @@ const maintenanceApi = baseApi.injectEndpoints({
         method: "POST",
         body: data,
       }),
+      invalidatesTags: ["maintenance"],
     }),
 
     getMyMaintenanceData: builder.query({
@@ -15,6 +16,7 @@ const maintenanceApi = baseApi.injectEndpoints({
         url: "/maintenance/my-maintenance-request",
         method: "GET",
       }),
+      providesTags: ["maintenance"],
     }),
   }),
 });
