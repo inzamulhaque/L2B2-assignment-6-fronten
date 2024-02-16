@@ -2,16 +2,35 @@ import { Layout, Menu } from "antd";
 import sidebarItemsGenerator from "../../utils/sidebarItemsGenerator";
 
 import sellerPath from "../../routes/seller.routes";
+import { IUser, useCurrentToken } from "../../redux/features/auth/authSlice";
+import buyerPath from "../../routes/maintenance.routes";
+import { useAppSelector } from "../../redux/hooks";
+import verifyToken from "../../utils/verifyToken";
 
 const { Sider } = Layout;
 
 const Sidebar = () => {
-  // const bikeSideBarItem = sidebarItemsGenerator(bikePath, "bikes");
-  const sidebarItems = sidebarItemsGenerator(sellerPath, "seller");
-  // const sidebarItems = [
-  //   ...bikeSideBarItem,
-  //   { key: "Sales", label: <NavLink to="/sales">Sales</NavLink> },
-  // ];
+  const token = useAppSelector(useCurrentToken);
+
+  let user;
+
+  if (token) {
+    user = verifyToken(token);
+  }
+
+  let sidebarItems;
+
+  switch ((user as IUser)!.role) {
+    case "seller":
+      sidebarItems = sidebarItemsGenerator(sellerPath, "seller");
+      break;
+    case "buyer":
+      sidebarItems = sidebarItemsGenerator(buyerPath, "buyer");
+      break;
+
+    default:
+      break;
+  }
 
   return (
     <>

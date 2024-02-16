@@ -43,7 +43,7 @@ export type TBike = {
   insurance?: TInsurance;
 };
 
-type TTableType = Pick<TBike, "name" | "price" | "quantity" | "color">;
+export type TTableType = Pick<TBike, "name" | "price" | "quantity" | "color">;
 
 const Bikes = () => {
   const [search, setSearch] = useState(null);

@@ -11,6 +11,7 @@ import CreateVariant from "../pages/bike/CreateVariant";
 import ProtectedRoute from "../components/layout/ProtectedRoute";
 import sellerPath from "./seller.routes";
 import Landing from "../components/layout/Landing";
+import buyerPath from "./maintenance.routes";
 
 const router = createBrowserRouter([
   {
@@ -49,6 +50,12 @@ const router = createBrowserRouter([
         ),
       },
     ],
+  },
+
+  {
+    path: "/buyer",
+    element: <App />,
+    children: routeGenerator(buyerPath),
   },
 
   {
