@@ -1,4 +1,4 @@
-import { Button } from "antd";
+import { Button, Table, TableColumnsType } from "antd";
 import { useSalesHistoryQuery } from "../../redux/features/sell/sellApi";
 import { CSSProperties, useState } from "react";
 
@@ -18,7 +18,7 @@ export interface ISale {
 
 const Sales = () => {
   const [time, seTime] = useState("Monthly");
-  const { data: sales } = useSalesHistoryQuery(time);
+  const { data: sales, isFetching } = useSalesHistoryQuery(time);
 
   const thStyle: CSSProperties = {
     padding: "10px",
@@ -32,6 +32,60 @@ const Sales = () => {
     textAlign: "center",
     border: "1px solid black",
   };
+
+  const tableData = sales?.data?.map((sale: ISale, index: number) => ({
+    sl: index + 1,
+    buyerName: sale?.buyerName,
+    bikeName: sale?.bikeId?.name,
+    bikeColor: sale?.bikeId?.color,
+    quantity: sale?.quantity,
+    price: sale?.bikeId?.price,
+    total: sale?.totalAmount,
+    sellerEmail: sale?.sellerEmail,
+  }));
+
+  const columns: TableColumnsType<ISale> = [
+    {
+      title: "SL No",
+      key: "sl",
+      dataIndex: "sl",
+    },
+    {
+      title: "Buyer Name",
+      key: "buyerName",
+      dataIndex: "buyerName",
+    },
+    {
+      title: "Bike Name",
+      key: "bikeName",
+      dataIndex: "bikeName",
+    },
+    {
+      title: "Bike Color",
+      key: "bikeColor",
+      dataIndex: "bikeColor",
+    },
+    {
+      title: "Quantity",
+      key: "quantity",
+      dataIndex: "quantity",
+    },
+    {
+      title: "Price",
+      key: "price",
+      dataIndex: "price",
+    },
+    {
+      title: "Total",
+      key: "total",
+      dataIndex: "total",
+    },
+    {
+      title: "Seller Email",
+      key: "sellerEmail",
+      dataIndex: "sellerEmail",
+    },
+  ];
 
   return (
     <>
@@ -58,7 +112,7 @@ const Sales = () => {
         </Button>
       </div>
 
-      <table
+      {/* <table
         style={{
           borderCollapse: "collapse",
           width: "100%",
@@ -91,7 +145,9 @@ const Sales = () => {
             </tr>
           ))}
         </tbody>
-      </table>
+      </table> */}
+
+      <Table loading={isFetching} columns={columns} dataSource={tableData} />
     </>
   );
 };

@@ -118,19 +118,6 @@ const Bikes = () => {
     }
   };
 
-  // const thStyle: CSSProperties = {
-  //   padding: "10px",
-  //   textAlign: "center",
-  //   fontWeight: "bold",
-  //   border: "1px solid black",
-  // };
-
-  // const tdStyle: CSSProperties = {
-  //   padding: "10px",
-  //   textAlign: "center",
-  //   border: "1px solid black",
-  // };
-
   const columns: TableColumnsType<TTableType> = [
     {
       title: " ",
@@ -181,27 +168,27 @@ const Bikes = () => {
       render: (item) => {
         return (
           <Row gutter={1}>
-            <Col span={4}>
+            <Col span={24} md={{ span: 4 }}>
               <Button type="primary" onClick={() => editBike(item)}>
                 Edit
               </Button>
             </Col>
-            <Col span={4}>
+            <Col span={24} md={{ span: 4 }}>
               <Button type="default" onClick={() => deleteOneBike(item._id)}>
                 Delete
               </Button>
             </Col>
-            <Col span={4}>
+            <Col span={24} md={{ span: 4 }}>
               <Button type="primary" onClick={() => bikeDetails(item)}>
                 Details
               </Button>
             </Col>
-            <Col span={6}>
+            <Col span={24} md={{ span: 6 }}>
               <Button type="default" onClick={() => CreateVariant(item)}>
                 Create Variant
               </Button>
             </Col>
-            <Col span={4}>
+            <Col span={24} md={{ span: 4 }}>
               <Button
                 type="primary"
                 onClick={() => {
@@ -232,79 +219,6 @@ const Bikes = () => {
           </div>
         </FormContainer>
       </div>
-
-      {/* <table
-        style={{
-          borderCollapse: "collapse",
-          width: "100%",
-        }}
-      >
-        <thead>
-          <tr>
-            <th style={thStyle}> &nbsp; </th>
-            <th style={thStyle}> Name </th>
-            <th style={thStyle}> Price </th>
-            <th style={thStyle}> Quantity </th>
-            <th style={thStyle}> Color </th>
-            <th style={thStyle}> Release Date </th>
-            <th style={thStyle}> Brand </th>
-            <th style={thStyle}> Actions </th>
-          </tr>
-        </thead>
-        <tbody>
-          {bikes?.data?.map(
-            (bike: IBike) =>
-              bike.isVisible &&
-              !bike.isDeleted && (
-                <tr key={bike._id}>
-                  <td style={tdStyle}>
-                    <input
-                      type="checkbox"
-                      name="id"
-                      value={bike._id}
-                      checked={selectedIds.includes(bike._id)}
-                      onChange={bulkDelete}
-                    />
-                  </td>
-                  <td style={tdStyle}>{bike.name}</td>
-                  <td style={tdStyle}>{bike.price}</td>
-                  <td style={tdStyle}>{bike.quantity}</td>
-                  <td style={tdStyle}>{bike.color}</td>
-                  <td style={tdStyle}>{bike.releaseDate}</td>
-                  <td style={tdStyle}>{bike.brand}</td>
-                  <td style={tdStyle}>
-                    <Button type="primary" onClick={() => editBike(bike)}>
-                      Edit
-                    </Button>
-                    <Button
-                      type="default"
-                      onClick={() => deleteOneBike(bike._id)}
-                    >
-                      Delete
-                    </Button>
-                    <Button type="primary" onClick={() => bikeDetails(bike)}>
-                      Details
-                    </Button>
-                    <Button type="default" onClick={() => CreateVariant(bike)}>
-                      Create Variant
-                    </Button>
-                    <Button
-                      type="primary"
-                      onClick={() => {
-                        setIsOpen(true);
-                        setBikeId(bike._id);
-                      }}
-                    >
-                      Sell
-                    </Button>
-
-                    <Button type="default">Request Maintenance</Button>
-                  </td>
-                </tr>
-              )
-          )}
-        </tbody>
-      </table> */}
 
       <Table loading={isFetching} columns={columns} dataSource={tableData} />
 
