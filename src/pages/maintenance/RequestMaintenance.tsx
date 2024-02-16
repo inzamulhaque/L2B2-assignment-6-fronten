@@ -10,10 +10,22 @@ import CustomizeDatePicker from "../../components/form/CustomizeDatePicker";
 import { toast } from "sonner";
 import { useRequestMaintenanceMutation } from "../../redux/features/maintenance/maintenanceApi";
 
+type TRes = {
+  data?: {
+    success: boolean;
+    message: string;
+  };
+  error?: {
+    data: {
+      message: string;
+    };
+  };
+};
+
 const RequestMaintenance = () => {
   const [search, setSearch] = useState(null);
 
-  const { data: bikes, isLoading, isFetching } = useGetAllBikesQuery(search);
+  const { data: bikes, isFetching } = useGetAllBikesQuery(search);
 
   const tableData = bikes?.data?.map((data: TBike) => ({
     key: data._id,
@@ -113,7 +125,7 @@ const AddMarksModal = ({ bikeKey }: { bikeKey: string }) => {
 
       console.log(reqMaintenanceData);
 
-      const res = await addReqMainenance(reqMaintenanceData);
+      const res = (await addReqMainenance(reqMaintenanceData)) as TRes;
 
       if (res?.data?.success === true) {
         toast.success(res?.data?.message, { id: toastId });

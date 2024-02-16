@@ -6,6 +6,7 @@ import { IUser, useCurrentToken } from "../../redux/features/auth/authSlice";
 import buyerPath from "../../routes/buyer.routes";
 import { useAppSelector } from "../../redux/hooks";
 import verifyToken from "../../utils/verifyToken";
+import { ItemType, MenuItemType } from "antd/es/menu/hooks/useItems";
 
 const { Sider } = Layout;
 
@@ -22,10 +23,16 @@ const Sidebar = () => {
 
   switch ((user as IUser)!.role) {
     case "seller":
-      sidebarItems = sidebarItemsGenerator(sellerPath, "seller");
+      sidebarItems = sidebarItemsGenerator(
+        sellerPath,
+        "seller"
+      ) as ItemType<MenuItemType>[];
       break;
     case "buyer":
-      sidebarItems = sidebarItemsGenerator(buyerPath, "buyer");
+      sidebarItems = sidebarItemsGenerator(
+        buyerPath,
+        "buyer"
+      ) as ItemType<MenuItemType>[];
       break;
 
     default:

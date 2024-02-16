@@ -14,11 +14,11 @@ type TTableData = {
 };
 
 const PrintBill = () => {
-  const printRef = useRef();
+  const printRef = useRef<HTMLDivElement>(null);
   const { id } = useParams();
 
   const handlePrint = useReactToPrint({
-    content: () => printRef.current,
+    content: () => printRef.current as HTMLDivElement,
   });
 
   const { data: orderData, isFetching } = useGetOrderByIdQuery(id, {
@@ -110,7 +110,7 @@ const PrintBill = () => {
             </Col>
 
             <Col span={6} style={{ display: "flex", justifyContent: "end" }}>
-              <p>Bill No: {(order?._id as string).substring(0, 5)}</p>
+              <p>Bill No: {(order?._id as string)?.substring(0, 5)}</p>
             </Col>
           </Row>
 
