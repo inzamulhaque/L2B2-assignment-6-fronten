@@ -2,6 +2,8 @@ import { useParams } from "react-router-dom";
 import { useGetOrderByIdQuery } from "../../redux/features/sell/sellApi";
 import { Button, Col, Row, Table, TableColumnsType } from "antd";
 import moment from "moment";
+import { useRef } from "react";
+import { useReactToPrint } from "react-to-print";
 
 type TTableData = {
   key: string;
@@ -12,7 +14,12 @@ type TTableData = {
 };
 
 const PrintBill = () => {
+  const printRef = useRef();
   const { id } = useParams();
+
+  const handlePrint = useReactToPrint({
+    content: () => printRef.current,
+  });
 
   const { data: orderData, isFetching } = useGetOrderByIdQuery(id, {
     skip: !id,
@@ -65,11 +72,18 @@ const PrintBill = () => {
             marginBottom: "7px",
           }}
         >
-          <Button type="primary">Print</Button>
+          <Button onClick={handlePrint} type="primary">
+            Print
+          </Button>
         </div>
 
         <div
-          style={{ background: "white", padding: "15px", borderRadius: "11px" }}
+          ref={printRef}
+          style={{
+            background: "white",
+            padding: "15px",
+            borderRadius: "11px",
+          }}
         >
           <small style={{ textAlign: "center", display: "block" }}>
             Bismillahir Rahmanir Rahim
@@ -85,14 +99,18 @@ const PrintBill = () => {
           </h3>
 
           <Row>
-            <Col span={16}>
+            <Col span={12}>
               <p>Seller Email: {orderData?.data?.sellerEmail}</p>
             </Col>
-            <Col span={8}>
+            <Col span={6}>
               <p>
                 Date:{" "}
                 {moment(new Date(orderData?.data?.date as string)).format("ll")}
               </p>
+            </Col>
+
+            <Col span={6} style={{ display: "flex", justifyContent: "end" }}>
+              <p>Bill No: {(order?._id as string).substring(0, 5)}</p>
             </Col>
           </Row>
 
